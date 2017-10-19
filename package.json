@@ -4,7 +4,7 @@
   "description": "AngularJS service used to access Salesforce REST calls from within a MobileCaddy application",
   "main": "index.js",
   "scripts": {
-    "postinstall": "cp js/mcrest.service.js ../../www/js/services",
+    "devsetup": "cp js/mcrest.service.js ../../www/js/services",
     "test": "grunt karma"
   },
   "keywords": [
