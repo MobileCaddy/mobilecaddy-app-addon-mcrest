@@ -4,6 +4,8 @@
 
 AngularJS service used to access Salesforce REST calls from within a MobileCaddy application.
 
+[![Build Status](https://travis-ci.org/MobileCaddy/mobilecaddy-app-addon-mcrest.svg)](https://travis-ci.org/MobileCaddy/mobilecaddy-app-addon-mcrest)
+
 
 ## Installation
 
