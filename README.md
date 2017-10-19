@@ -11,6 +11,8 @@ AngularJS service used to access Salesforce REST calls from within a MobileCaddy
 
 ```
 npm install mobilecaddy-app-addon-mcrest
+
+npm explore mobilecaddy-app-addon-mcrest -- npm run devsetup
 ```
 
 The installation will include the tasks of moving the relevant scripts into the correct place of your MobileCaddy appication project structure. Included in this copying of files will be the relevant unit tests
