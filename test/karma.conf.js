@@ -2,9 +2,9 @@
 // Generated on Fri Apr 24 2015 10:42:58 GMT+0100 (BST)
 
 // isCI - Are we running locally, or on Travis/bitbucket
-var isCI = (process.env.TRAVIS || BITBUCKET_REPO_OWNER) ? true : false;
+var isCI = (process.env.TRAVIS || process.env.BITBUCKET_REPO_OWNER) ? true : false;
 
-var coverageRptr = (isTravis) ? 'text' : '';
+var coverageRptr = (isCI) ? 'text' : '';
 
 module.exports = function(config) {
   config.set({
@@ -73,6 +73,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: isTravis
+    singleRun: isCI
   });
 };
