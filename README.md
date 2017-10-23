@@ -32,8 +32,86 @@ And the appDataUtils should be included in this line also;
 angular.module('starter.services', ['underscore', 'devUtils', 'vsnUtils', 'smartStoreUtils', 'syncRefresh', 'appDataUtils', 'logger']);
 ```
 
-## Usage
+## Calls Available
+
+For example usage please checkout the [MobileCaddy KitchenSink App](https://github.com/MobileCaddy/ionic-kitchen-sink)
+
+
+### query ###
+
+For SOQL queries
+
+#### Example ####
+
+Seardhing for a contact
 
 ```
-TBC
+var soql = "SELECT name, id FROM Contact WHERE name LIKE 'dave'";
+
+McRestService.query(soql).then(function(result){
+	console.log("My results", result.records);
+}
 ```
+
+### request ###
+
+Generic calls
+
+#### Examples ####
+
+Getting the latest chatter posts.
+
+```
+var obj = {
+	method: 'GET',
+	contentType: 'application/json',
+	path: '/services/data/v36.0/chatter/feeds/news/me/feed-elements'
+};
+McRestService.request(obj).then(function(result){
+	console.log("getLatestChatter result",
+		result.elements[0].actor.displayName,
+		result.elements[0].body.text);
+});
+```
+List Salesforce files
+```
+var obj = {
+	method: 'GET',
+	contentType: 'application/json',
+	path: '/services/data/v40.0/connect/files/users/me'
+};
+McRestService.request(obj).then(function(result){
+	console.log("restCall result", result);
+	vm.fs = result.files;
+});
+```
+
+### requestBuffer ###
+
+Retrieves Salesforce files
+
+#### Example ####
+
+```
+var obj = {
+	method: 'GET',
+	path: myfile.downloadUrl
+};
+McRestService.requestBuffer(obj).then(function(result){
+	console.log("downloadRemote result", result);
+	var dataObj = new Blob([result]);
+});
+```
+
+### upload ###
+
+Uploads files to Salesforce. Returns an object representing the file on Salesforce, if successful.
+
+#### Example ####
+
+```
+McRestService.upload(vm.file).then(function(result){
+
+});
+```
+
