@@ -52,13 +52,36 @@ describe('McRestService Unit Tests', function(){
       });
 		});
 
-    it('should return pre-set oath', function (done) {
+    it('should return non-pre-set oath', function (done) {
       McRestService._setoauth(false);
       McRestService._setUpOauth().then(function(){
+        let oauth = McRestService._getoauth();
+        expect(oauth.accessToken).toBe("foo");
+        expect(oauth.refreshToken).toBe("foo");
+        expect(oauth.instanceUrl).toBe("bar");
         done();
       }).catch(function(e){
         console.error(e);
         expect(true).toBe(false);
+        done();
+      });
+    });
+
+    it('should handle an error', function (done) {
+
+      appDataUtilsMock.getCurrentValueFromAppSoup.and.callFake(function(){
+        return new Promise(function(resolve, reject) {
+          reject("ERROR");
+        });
+      });
+
+      McRestService._setoauth(false);
+      McRestService._setUpOauth().then(function(){
+        expect(true).toBe(false);
+        done();
+      }).catch(function(e){
+        console.error(e);
+        expect(e).toBe("ERROR");
         done();
       });
     });
