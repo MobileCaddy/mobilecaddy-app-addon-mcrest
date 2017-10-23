@@ -34,7 +34,12 @@
 
       requestBuffer: requestBuffer,
 
-      upload: upload
+      upload: upload,
+
+      // Test commands - not to be directly used
+      _setoauth : function setOauth(o) {oauth = o;},
+      _getoauth : function getOauth() {return oauth;},
+      _setUpOauth : setUpOauth
     };
 
 
