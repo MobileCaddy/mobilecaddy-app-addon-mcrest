@@ -34,7 +34,7 @@ angular.module('starter.services', ['underscore', 'devUtils', 'vsnUtils', 'smart
 
 ## Configuring
 
-You can configure the API version to be used like this. If no API version is set, the default shall be used. This can be run in the `.config` in the _app.js_. The format of the version number is strict, and the call will return false if the supplied value is not valid.
+You can configure the API version to be used like this. If no API version is set, the default shall be used. This can be run in the `.run` in the _app.js_. The format of the version number is strict, and the call will return false if the supplied value is not valid.
 
 ```
 McRestService.config({apiVersion: "v41.0"});
