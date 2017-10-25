@@ -4,7 +4,7 @@ echo "Running postinstall.sh, from..."
 pwd
 
 servicesdir="../../www/js/services"
-testdestdir="../../www/js/services"
+testdestdir="../../tests/Services"
 
 if [ -d "$servicesdir" ]; then
 		echo "Directory exists!"
