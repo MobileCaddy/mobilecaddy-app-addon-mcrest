@@ -9,5 +9,5 @@ testdestdir="../../tests/Services"
 if [ -d "$servicesdir" ]; then
 		echo "Directory exists!"
     cp js/mcrest.service.js $servicesdir
-    cp test/specs/mcrestservice.test.js $testdestdir
+    cp test/specs/mcrestservice.tests.js $testdestdir
 fi
