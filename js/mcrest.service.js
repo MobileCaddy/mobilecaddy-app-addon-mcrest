@@ -25,9 +25,11 @@
     var logModule = "app.McRestService";
     var oauth;
     var failCount = 0;
-    var apiVersion = "v36.0";
+    var apiVersion = "v40.0";
 
     return {
+      config: config,
+
       query: query,
 
       request: request,
@@ -39,8 +41,24 @@
       // Test commands - not to be directly used
       _setoauth : function setOauth(o) {oauth = o;},
       _getoauth : function getOauth() {return oauth;},
+      _getApiVersion : function getOauth() {return apiVersion;},
       _setUpOauth : setUpOauth
     };
+
+
+    function config(conf) {
+      if (conf.apiVersion) {
+        // Check out version is in the correct form
+        var regTest = /v[0-9]{1,3}\.[0-9]{1,2}$/;
+        if (regTest.test(conf.apiVersion)) {
+          apiVersion = conf.apiVersion;
+          return true;
+        } else {
+          logger.error(logModule, "Invalid apiVersion", conf.apiVersion);
+          return false;
+        }
+      }
+    }
 
 
     function query(soql) {
@@ -50,7 +68,7 @@
         }).then(function(result){
           resolve(result);
         }).catch(function(e){
-          logger.error(e);
+          logger.error(logModule, "query", e);
           reject(e);
         });
       });
@@ -69,7 +87,7 @@
         if (oauth) {
           resolve();
         } else {
-          console.log("Getting oauth details from appSoup");
+          console.log(logModule, "Getting oauth details from appSoup");
           appDataUtils.getCurrentValueFromAppSoup('accessToken').then(function(accessToken){
             oauth = {'accessToken': accessToken};
             return appDataUtils.getCurrentValueFromAppSoup('refreshToken');
@@ -81,7 +99,7 @@
             resolve();
           }).catch(function(e){
             oauth = null;
-            logger.error(e);
+            logger.error(logModule, "setUpOauth", e);
             reject(e);
           });
         }
@@ -98,7 +116,7 @@
             failCount = 0;
             resolve(r);
           }).catch(function(e){
-            console.error(logModule, 'request failed', e);
+            logger.error(logModule, 'request failed', e);
             if (failCount > 0) {
               failCount = 0;
               reject(e);
@@ -106,11 +124,11 @@
               failCount ++;
               syncRefresh.refreshToken(
                 function() {
-                  console.info("refreshToken success");
+                  logger.info("refreshToken success");
                   return request(obj);
                 },
                 function(e) {
-                  console.error("refreshToken failed", e);
+                  logger.error("refreshToken failed", e);
                   reject(e);
                 }
               );
@@ -120,7 +138,7 @@
           forcejsRequest(obj).then(function(r){
             resolve(r);
           }).catch(function(e){
-            console.error("doRequest", e);
+            logger.error(logModule, "request", e);
             reject(e);
           });
         }
@@ -145,7 +163,7 @@
           forcejsUpload(file).then(function(result){
             resolve(result);
           }).catch(function(e){
-            logger.error(e);
+            logger.error(logModule, "upload", e);
             reject(e);
           });
         }
@@ -170,11 +188,11 @@
            headers: headers
         })
         .success(function(res){
-          console.log("success");
+          console.log(logModule, "forcejsUpload success");
           resolve(res);
         })
         .error(function(e){
-          console.error(e);
+          logger.error(logModule, "forcejsUpload", e);
           reject(e);
         });
       });
@@ -197,11 +215,11 @@
            headers: headers
         })
         .success(function(res){
-          console.log("success");
+          console.log(logModule, "doUpload success");
           resolve(res);
         })
         .error(function(e){
-          console.error(e);
+          logger.error(logModule, "doUpload", e);
           reject(e);
         });
       });
@@ -215,7 +233,7 @@
             resolve(resp);
           },
           function(e) {
-            console.error(logModule, 'forcejs Failed',e);
+            logger.error(logModule, 'forcejsRequest',e);
             reject(e);
           }
         );

@@ -32,6 +32,14 @@ And the appDataUtils should be included in this line also;
 angular.module('starter.services', ['underscore', 'devUtils', 'vsnUtils', 'smartStoreUtils', 'syncRefresh', 'appDataUtils', 'logger']);
 ```
 
+## Configuring
+
+You can configure the API version to be used like this. If no API version is set, the default shall be used. This can be run in the `.run` in the _app.js_. The format of the version number is strict, and the call will return false if the supplied value is not valid.
+
+```
+McRestService.config({apiVersion: "v41.0"});
+```
+
 ## Calls Available
 
 For example usage please checkout the [MobileCaddy KitchenSink App](https://github.com/MobileCaddy/ionic-kitchen-sink)
